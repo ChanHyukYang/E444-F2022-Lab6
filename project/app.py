@@ -1,7 +1,7 @@
 import sqlite3
 import os
 from pathlib import Path
-
+from functools import wraps
 from flask import (
     Flask,
     g,
@@ -15,7 +15,6 @@ from flask import (
     jsonify,
 )
 from flask_sqlalchemy import SQLAlchemy
-from functools import wraps
 
 basedir = Path(__file__).resolve().parent
 
@@ -29,7 +28,8 @@ url = os.getenv("DATABASE_URL", f"sqlite:///{Path(basedir).joinpath(DATABASE)}")
 if url.startswith("postgres://"):
     url = url.replace("postgres://", "postgresql://", 1)
 
-SQLALCHEMY_DATABASE_URI = urlSQLALCHEMY_TRACK_MODIFICATIONS = False
+SQLALCHEMY_DATABASE_URI = url
+SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 
 # create and initialize a new Flask app
